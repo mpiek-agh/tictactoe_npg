@@ -1,29 +1,29 @@
 import random
 import copy
 
-class GraZKompem:
-    def __init__(self, runda=0, gracz=0) -> None:
-        self.runda = runda
+class AI:
+    def __init__(self, round=0, player=0) -> None:
+        self.round = round
 
-    def pustePola(self, KOL, WIER, plansza) -> int:
+    def emptyField(self, COL, ROW, board) -> int:
         #nie wiem czy to działa
-        puste = []
-        for kol in range(KOL):
-            for wier in range(WIER):
-                if plansza[kol][wier]:
-                    puste.append((kol,wier))
+        empty = []
+        for i in range(COL):
+            for j in range(ROW):
+                if board[i][j]:
+                    empty.append((i,j))
         
-        return puste
+        return empty
 
 
-    def ruchLosowy(self, plansza):
-        pustePola = plansza.pustePola()
-        indeks = random.randrange(0, len(pustePola), 1)
+    def randMove(self, board,):
+        emptyF = board.emptyField()
+        ind = random.randrange(0, len(emptyF), 1)
 
-        return pustePola[indeks]    #krotka (kol, wiersz)
+        return emptyF[ind]    #krotka (kol, wiersz)
     
-    def minimax(self, plansza, maximizing): 
-        case = plansza.koniecGry()  #funkcja kończąca gre po zwycięstwie lub remisie
+    def minimax(self, board, maximizing): 
+        case = board.termination()  #funkcja kończąca gre po zwycięstwie lub remisie
         
         #wygrywa gracz 1
         if case == 1:
@@ -40,21 +40,21 @@ class GraZKompem:
         
         elif not maximizing:
             mini = 2
-            ruchKorzystny = None
-            pustePola = plansza.pustePola()
+            favMove = None
+            emptyFiled = board.emptyField()
 
-            for (kol,wier) in pustePola:
-                tab = copy.deepcopy(plansza)
-                tab.znak(kol, wier, gracz)  #funkcja wstawiająca znak
-                gra = self.minimax(tab, True)[0]
+            for (i,j) in emptyField:
+                tab = copy.deepcopy(board)
+                tab.symbol(i, j, player)  #funkcja wstawiająca znak
+                game = self.minimax(tab, True)[0]
 
 
-    def gra(self, plansza):
-        if self.runda == 0:
+    def game(self, board):
+        if self.round == 0:
             #losowy ruch
-            ruch = self.ruchLosowy(plansza)
+            move = self.randMove(board)
         else:
             #minimax
-            self.minimax(plansza, False)
+            self.minimax(board, False)
     
-        return ruch
+        return move
