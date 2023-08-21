@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
+import curses
 
 
 class ProgramState(ABC):
     @abstractmethod
-    def loop(self):
+    def loop(self, scr):
         """
         Funkcja powinna zawierać pętle przyjmującą dane wejściowe od użytkownika
         i wyświetlającą odpowiednią zawartość na ekranie.
@@ -15,3 +16,7 @@ class ProgramState(ABC):
         return 'game', (3), {Player1: p1, Player2: p2}
         """
         pass
+
+    def tui_template(self, scr):
+        curses.curs_set(0)
+        scr.nodelay(True)

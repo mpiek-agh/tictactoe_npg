@@ -34,6 +34,5 @@ class Game(ProgramState):
     def print_board(self):
         pp(self.board)
 
-    def loop(self):
-        # do implementacji
+    def loop(self, scr):
         pass
