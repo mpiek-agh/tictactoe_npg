@@ -1,6 +1,8 @@
+import curses
+
 from src.game import Game
 from src.menu import Menu
-import curses
+from src.help import Help
 
 
 class Tictactoe:
@@ -8,7 +10,8 @@ class Tictactoe:
         self.program_states = {
             "game": Game,
             'menu': Menu,
-            "quit": None
+            'help': Help,
+            'quit': None
             # Do implementacji
             # 'game_setup': None,
             # 'game_time': None,
