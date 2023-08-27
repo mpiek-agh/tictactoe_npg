@@ -36,3 +36,24 @@ class Game(ProgramState):
 
     def loop(self, scr):
         pass
+    def termination(self, size):
+        #wartość znaku musi byc przypisana do gracza, żeby minimax mógł stwierdzić który gracz wygrał
+        #wygrywającaj kolumna
+        for col in range(size):
+            if self.board[0][col] == self.board[1][col] == self.board[0][col] != 0:
+                return self.board[0][col] 
+        #wygrywający wiersz
+        for row in range(size):
+            if self.board[row][0] == self.board[row][1] == self.board[row][2] != 0:
+                return self.board[row][0]
+        #wygrywająca przekątna
+        
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != 0:
+            return self.board[0][col]
+        
+        
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != 0:
+            return self.board[0][col]
+        
+        return 0 #brak wygranych
+        
