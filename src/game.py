@@ -36,24 +36,60 @@ class Game(ProgramState):
 
     def loop(self, scr):
         pass
-    def termination(self, size):
+    def termination(self):
         #wartość znaku musi byc przypisana do gracza, żeby minimax mógł stwierdzić który gracz wygrał
         #wygrywającaj kolumna
-        for col in range(size):
-            if self.board[0][col] == self.board[1][col] == self.board[0][col] != 0:
-                return self.board[0][col] 
-        #wygrywający wiersz
-        for row in range(size):
-            if self.board[row][0] == self.board[row][1] == self.board[row][2] != 0:
-                return self.board[row][0]
-        #wygrywająca przekątna
-        
-        if self.board[0][0] == self.board[1][1] == self.board[2][2] != 0:
-            return self.board[0][col]
-        
-        
-        if self.board[0][2] == self.board[1][1] == self.board[2][0] != 0:
-            return self.board[0][col]
-        
-        return 0 #brak wygranych
+
+        if len(self.board) == 9:
+            for col in range(self.board_size):
+                if self.board[0][col] == self.board[1][col] == self.board[2][col] != 0:
+                    return self.board[0][col] 
+            #wygrywający wiersz
+            for row in range(self.board_size):
+                if self.board[row][0] == self.board[row][1] == self.board[row][2] != 0:
+                    return self.board[row][0]
+            #wygrywająca przekątna
+            
+            if self.board[0][0] == self.board[1][1] == self.board[2][2] != 0:
+                return self.board[0][col]
+            
+            
+            if self.board[0][2] == self.board[1][1] == self.board[2][0] != 0:
+                return self.board[0][col]
+            
+            return 0 #brak wygranych
+        elif len(self.board) == 16:
+            for col in range(self.board_size):
+                    if self.board[0][col] == self.board[1][col] == self.board[2][col] == self.board[3][col] != 0:
+                        return self.board[0][col] 
+                #wygrywający wiersz
+            for row in range(self.board_size):
+                if self.board[row][0] == self.board[row][1] == self.board[row][2] == self.board[row][3] != 0:
+                    return self.board[row][0]
+                #wygrywająca przekątna
+                
+            if self.board[0][0] == self.board[1][1] == self.board[2][2] == self.board[3][3] != 0:
+                return self.board[0][col]
+                
+            if self.board[0][3] == self.board[1][2] == self.board[2][1] == self.board[3][0] != 0:
+                return self.board[0][col]
+                
+            return 0 #brak wygranych
+        elif len(self.board) == 25:          
+            for col in range(self.board_size):
+                    if self.board[0][col] == self.board[1][col] == self.board[2][col] == self.board[3][col] == self.board[4][col] != 0:
+                        return self.board[0][col] 
+                #wygrywający wiersz
+            for row in range(self.board_size):
+                if self.board[row][0] == self.board[row][1] == self.board[row][2] == self.board[row][3] == self.board[row][4] != 0:
+                    return self.board[row][0]
+                #wygrywająca przekątna
+                
+            if self.board[0][0] == self.board[1][1] == self.board[2][2] == self.board[3][3] == self.board[4][4] != 0:
+                return self.board[0][col]
+                
+            if self.board[0][4] == self.board[1][3] == self.board[2][2] == self.board[3][1] == self.board[4][0] != 0:
+                return self.board[0][col]
+                
+            return 0 #brak wygranych
         
