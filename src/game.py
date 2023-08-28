@@ -40,7 +40,7 @@ class Game(ProgramState):
         #wartość znaku musi byc przypisana do gracza, żeby minimax mógł stwierdzić który gracz wygrał
         #wygrywającaj kolumna
 
-        if len(self.board) == 9:
+        if self.board_size == 3:
             for col in range(self.board_size):
                 if self.board[0][col] == self.board[1][col] == self.board[2][col] != 0:
                     return self.board[0][col] 
@@ -58,7 +58,7 @@ class Game(ProgramState):
                 return self.board[0][col]
             
             return 0 #brak wygranych
-        elif len(self.board) == 16:
+        elif self.board_size == 4:
             for col in range(self.board_size):
                     if self.board[0][col] == self.board[1][col] == self.board[2][col] == self.board[3][col] != 0:
                         return self.board[0][col] 
@@ -75,7 +75,7 @@ class Game(ProgramState):
                 return self.board[0][col]
                 
             return 0 #brak wygranych
-        elif len(self.board) == 25:          
+        elif self.board_size == 5:          
             for col in range(self.board_size):
                     if self.board[0][col] == self.board[1][col] == self.board[2][col] == self.board[3][col] == self.board[4][col] != 0:
                         return self.board[0][col] 
@@ -92,4 +92,3 @@ class Game(ProgramState):
                 return self.board[0][col]
                 
             return 0 #brak wygranych
-        

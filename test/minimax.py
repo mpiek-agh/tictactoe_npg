@@ -1,5 +1,6 @@
 import random
 import copy
+from src.game import Game
 
 class AI:
     def __init__(self, round=1, player=2):
@@ -36,7 +37,7 @@ class AI:
         return empty
     
     def minimax(self, board, maximizing): 
-        case = board.termination()  #funkcja kończąca gre po zwycięstwie lub remisie
+        case = Game.termination()  #funkcja kończąca gre po zwycięstwie lub remisie
         
         #wygrywa gracz 1
         if case == 1:
@@ -56,7 +57,7 @@ class AI:
 
             for (i, j) in emptyField:
                 tab = copy.deepcopy(board)
-                tab.symbol(i, j, 1)  #funkcja wstawiająca znak
+                tab = Game.place(i, j)
                 game = self.minimax(tab, False)[0]
                 if game > maxi:
                     maxi = game
@@ -71,7 +72,7 @@ class AI:
 
             for (i, j) in emptyField:
                 tab = copy.deepcopy(board)
-                tab.symbol(i, j, self.player)  #funkcja wstawiająca znak
+                tab = Game.palce(i, j)
                 game = self.minimax(tab, True)[0]
                 if game < mini:
                     mini = game
