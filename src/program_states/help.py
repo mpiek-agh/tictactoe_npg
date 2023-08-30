@@ -9,7 +9,7 @@ class Help(ProgramState):
         while True:
             c = scr.getch()
             if c == ord('q'):
-                return 'quit', [], {}
+                return 'menu', [], {}
 
     def draw(self, scr):
         scr.clear()
