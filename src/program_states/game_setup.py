@@ -112,7 +112,7 @@ class GameSetup(ProgramState):
                     curses.noecho()
                     curses.curs_set(0)
 
-                elif self.selection == 7:
+                elif self.selection == 9:
                     setup = {
                         entry[0]: entry[1][entry[3]][1] for entry in self.menu_entries
                     }
