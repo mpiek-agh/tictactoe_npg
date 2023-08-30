@@ -13,7 +13,19 @@ class GameSetup(ProgramState):
                 4,
                 0,
             ],
-            ["player1_name", [["Name", "Player 1 name"]], 7, 0, str],
+            [
+                "starting_player",
+                (("1", 1), ("2", 2), ("Random", None)),
+                7,
+                2,
+            ],
+            [
+                "undoes",
+                (("0", 0), ("1", 1), ("2", 2), ("3", 3)),
+                10,
+                1,
+            ],
+            ["player1_name", [["Name", "Player 1 name"]], 13, 0, str],
             [
                 "player1_character",
                 (
@@ -26,7 +38,7 @@ class GameSetup(ProgramState):
                     ("M", "M"),
                     ("W", "W"),
                 ),
-                8,
+                14,
                 0,
             ],
             [
@@ -40,10 +52,10 @@ class GameSetup(ProgramState):
                     ("Red", 6),
                     ("Yellow", 7),
                 ),
-                9,
-                0,
+                15,
+                1,
             ],
-            ["player2_name", [["Name", "Player 2 name"]], 12, 0, str],
+            ["player2_name", [["Name", "Player 2 name"]], 18, 0, str],
             [
                 "player2_character",
                 (
@@ -56,8 +68,8 @@ class GameSetup(ProgramState):
                     ("M", "M"),
                     ("W", "W"),
                 ),
-                13,
-                0,
+                19,
+                1,
             ],
             [
                 "player2_color",
@@ -70,10 +82,10 @@ class GameSetup(ProgramState):
                     ("Red", 6),
                     ("Yellow", 7),
                 ),
-                14,
-                0,
+                20,
+                2,
             ],
-            ["play", (("Play", None),), 16, 0],
+            ["play", (("Play", None),), 22, 0],
         ]
 
         self.selection = 0
@@ -132,8 +144,10 @@ class GameSetup(ProgramState):
 
         scr.addstr(1, 2, "  Standard game  ", curses.color_pair(2))
         scr.addstr(3, 2, "Board size", curses.color_pair(1))
-        scr.addstr(6, 2, "Player 1", curses.color_pair(1))
-        scr.addstr(11, 2, "Player 2", curses.color_pair(1))
+        scr.addstr(6, 2, "Starting player", curses.color_pair(1))
+        scr.addstr(9, 2, "Number of undoes", curses.color_pair(1))
+        scr.addstr(12, 2, "Player 1", curses.color_pair(1))
+        scr.addstr(17, 2, "Player 2", curses.color_pair(1))
 
         for j, row in enumerate(self.menu_entries):
             padding = 2
