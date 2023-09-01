@@ -20,3 +20,10 @@ class ProgramState(ABC):
     def tui_template(self, scr):
         curses.curs_set(0)
         scr.nodelay(True)
+        
+        scr.addstr(
+            curses.LINES - 1,
+            0,
+            "Press q to go back, use arrow keys and space to navigate ",
+            curses.color_pair(1),
+        )

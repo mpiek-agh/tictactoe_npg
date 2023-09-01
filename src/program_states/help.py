@@ -38,6 +38,4 @@ class Help(ProgramState):
         scr.addstr(11, 2, 'For real help, please visit: ')
         scr.addstr('https://findahelpline.com/pl/topics/suicidal-thoughts', curses.COLOR_BLUE | curses.A_UNDERLINE)
 
-        scr.addstr(curses.LINES-1, 0, 'Press q to go back, use arrow keys and space to navigate ', curses.color_pair(1))
-
         scr.refresh()

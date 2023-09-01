@@ -1,6 +1,7 @@
 import curses
 
 from src.program_state import ProgramState
+from src.player import Player
 
 
 class GameSetup(ProgramState):
@@ -9,13 +10,13 @@ class GameSetup(ProgramState):
         self.menu_entries = [
             [
                 "board_size",
-                (("3x3", 3), ("4x4", 4), ("5x5", 5), ("6x6", 6), ("7x7", 7)),
+                (("3x3", 3), ("4x4", 4), ("5x5", 5), ("6x6", 6)),
                 4,
                 0,
             ],
             [
                 "starting_player",
-                (("1", 1), ("2", 2), ("Random", None)),
+                (("1", 0), ("2", 1), ("Random", -1)),
                 7,
                 2,
             ],
@@ -27,7 +28,7 @@ class GameSetup(ProgramState):
             ],
             ["player1_name", [["Name", "Player 1 name"]], 13, 0, str],
             [
-                "player1_character",
+                "player1_symbol",
                 (
                     ("X", "X"),
                     ("O", "O"),
@@ -44,7 +45,6 @@ class GameSetup(ProgramState):
             [
                 "player1_color",
                 (
-                    ("White", 1),
                     ("Cyan", 2),
                     ("Magenta", 3),
                     ("Blue", 4),
@@ -57,7 +57,7 @@ class GameSetup(ProgramState):
             ],
             ["player2_name", [["Name", "Player 2 name"]], 18, 0, str],
             [
-                "player2_character",
+                "player2_symbol",
                 (
                     ("X", "X"),
                     ("O", "O"),
@@ -74,7 +74,6 @@ class GameSetup(ProgramState):
             [
                 "player2_color",
                 (
-                    ("White", 1),
                     ("Cyan", 2),
                     ("Magenta", 3),
                     ("Blue", 4),
@@ -89,6 +88,9 @@ class GameSetup(ProgramState):
         ]
 
         self.selection = 0
+
+    def entry_value(self, entry):
+        return self.menu_entries[entry][1][self.menu_entries[entry][3]][1]
 
     def loop(self, scr):
         self.draw(scr)
@@ -113,10 +115,11 @@ class GameSetup(ProgramState):
                     curses.curs_set(0)
 
                 elif self.selection == 9:
-                    setup = {
-                        entry[0]: entry[1][entry[3]][1] for entry in self.menu_entries
-                    }
-                    return "game", [], setup
+                    player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5))
+                    player2 = Player(self.entry_value(6), self.entry_value(7), self.entry_value(8))
+                    s = (self.entry_value(0), self.entry_value(1), self.entry_value(2), player1, player2)
+
+                    return "game", s, {}
 
                 self.selection = (self.selection + 1) % len(self.menu_entries)
                 self.draw(scr)
@@ -177,12 +180,5 @@ class GameSetup(ProgramState):
                     )
 
                 padding += len(entry[0]) + 1
-
-        scr.addstr(
-            curses.LINES - 1,
-            0,
-            "Press q to go back, use arrow keys and space to navigate ",
-            curses.color_pair(1),
-        )
 
         scr.refresh()

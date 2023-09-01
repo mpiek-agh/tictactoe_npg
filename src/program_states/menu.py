@@ -37,7 +37,6 @@ class Menu(ProgramState):
         self.tui_template(scr)
 
         scr.addstr(1, 2, '  TicTacToe  ', curses.color_pair(2))
-        scr.addstr(curses.LINES-1, 0, 'Press q to go back, use arrow keys and space to navigate ', curses.color_pair(1))
 
         for i, entry in enumerate(self.menu_entries):
             if i==self.selection:
