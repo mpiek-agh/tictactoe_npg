@@ -37,8 +37,8 @@ class Game(ProgramState):
         self.game_state = GameState.MOVE
         self.game_result = GameResult.WIN
 
-        self.board_selection = [0,0]
-        self.selection = 0
+        self.board_selection = [0,0] # wybór pola na planszy
+        self.selection = 0 # wybór pozycji w menu
 
     def player(self):
         # zwraca gracza do którego należy tura
