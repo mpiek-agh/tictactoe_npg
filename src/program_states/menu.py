@@ -40,7 +40,7 @@ class Menu(ProgramState):
 
         for i, entry in enumerate(self.menu_entries):
             if i==self.selection:
-                scr.addstr(3+i, 2, entry[0], curses.color_pair(3) | curses.A_BLINK)
+                scr.addstr(3+i, 2, entry[0], curses.color_pair(3))
             else:
                 scr.addstr(3+i, 2, entry[0], curses.color_pair(1))
 

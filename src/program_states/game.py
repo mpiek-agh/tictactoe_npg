@@ -143,9 +143,9 @@ class Game(ProgramState):
         for y in range(self.board_size):
             for x in range(self.board_size):
                 color = curses.color_pair(1)
-                if y == self.board_selection[1] and x == self.board_selection[0] and self.game_state == GameState.MOVE:
+                if self.game_state == GameState.MOVE and y == self.board_selection[1] and x == self.board_selection[0]:
                     color = curses.color_pair(self.tui_color) | curses.A_BLINK
-                elif y == self.board_selection[1] and x == self.board_selection[0] and self.game_state == GameState.CONFIRM:
+                elif self.game_state == GameState.CONFIRM and y == self.board_selection[1] and x == self.board_selection[0]:
                     color = curses.color_pair(self.tui_color)
 
                 scr.addstr(y_pos+y*4, x_pos+x*9, "       ", color)
