@@ -4,6 +4,7 @@ from src.program_states.game import Game
 from src.program_states.menu import Menu
 from src.program_states.help import Help
 from src.program_states.game_setup import GameSetup
+from src.program_states.minimax import AI
 
 
 class Tictactoe:
@@ -13,7 +14,8 @@ class Tictactoe:
             "menu": Menu,
             "help": Help,
             "quit": None,
-            "game_setup": GameSetup
+            "game_setup": GameSetup,
+            "with_computer": AI,
             # Do implementacji
             # 'game_time': None,
             # 'scoreboard': None,
