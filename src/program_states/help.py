@@ -1,5 +1,6 @@
-from src.program_state import ProgramState
 import curses
+
+from src import ProgramState
 
 
 class Help(ProgramState):
@@ -36,6 +37,7 @@ class Help(ProgramState):
         scr.addstr(' - select, confirm')
 
         scr.addstr(11, 2, 'For real help, please visit: ')
-        scr.addstr('https://findahelpline.com/pl/topics/suicidal-thoughts', curses.COLOR_BLUE | curses.A_UNDERLINE)
+        scr.addstr('https://findahelpline.com/pl/topics/suicidal-thoughts',
+                   curses.COLOR_BLUE | curses.A_UNDERLINE)
 
         scr.refresh()

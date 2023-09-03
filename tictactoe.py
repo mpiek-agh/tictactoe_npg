@@ -1,11 +1,6 @@
 import curses
 
-from src.program_states.game import Game
-from src.program_states.menu import Menu
-from src.program_states.help import Help
-from src.program_states.game_setup import GameSetup
-from src.program_states.minimax import AI
-from src.program_states.time_game_setup import TimeGameSetup
+from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, AI
 
 
 class Tictactoe:

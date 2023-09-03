@@ -2,21 +2,20 @@ from random import randint
 import curses
 from enum import Enum
 
-from src.program_state import ProgramState
-from src.board import Board
+from src import ProgramState, Board
 
 
 class GameState(Enum):
     # stany gry
     MOVE = 1    # gracz wykonuje ruch
-    CONFIRM = 2 # gracz potwierdza lub cofa ruch
+    CONFIRM = 2  # gracz potwierdza lub cofa ruch
     END = 3     # gra zakończona
 
 
 class GameResult(Enum):
     # wyniki gry
-    WIN = 1 # wygrana
-    TIE = 2 # remis
+    WIN = 1  # wygrana
+    TIE = 2  # remis
 
 
 class Game(ProgramState):
@@ -28,7 +27,8 @@ class Game(ProgramState):
         self.symbols = [' ', player1.symbol, player2.symbol]
 
         # Jeżeli gracz, który ma wykonać pierwszy ruch nie został podany to jest wybierany losowo
-        self.current_player = self.starting_player if self.starting_player>0 else randint(0, 1)
+        self.current_player = self.starting_player if self.starting_player > 0 else randint(
+            0, 1)
 
         self.tui_color = self.players[self.current_player].color
 
@@ -37,8 +37,8 @@ class Game(ProgramState):
         self.game_state = GameState.MOVE
         self.game_result = GameResult.WIN
 
-        self.board_selection = [0,0] # wybór pola na planszy
-        self.selection = 0 # wybór pozycji w menu
+        self.board_selection = [0, 0]  # wybór pola na planszy
+        self.selection = 0  # wybór pozycji w menu
 
     def player(self):
         # zwraca gracza do którego należy tura
@@ -84,27 +84,32 @@ class Game(ProgramState):
 
                 elif self.game_state == GameState.MOVE:
                     if self.board.place(self.board_selection[0], self.board_selection[1], self.current_player+1):
-                        self.board.place(self.board_selection[0], self.board_selection[1], self.player())
+                        self.board.place(
+                            self.board_selection[0], self.board_selection[1], self.player())
                         self.game_state = GameState.CONFIRM
 
                 self.draw(scr)
             elif c in (curses.KEY_DOWN, ord("s"), ord("j")):
                 if self.game_state == GameState.MOVE:
-                    self.board_selection[1] = (self.board_selection[1]+1)%self.board_size
+                    self.board_selection[1] = (
+                        self.board_selection[1]+1) % self.board_size
                 self.draw(scr)
             elif c in (curses.KEY_UP, ord("w"), ord("k")):
                 if self.game_state == GameState.MOVE:
-                    self.board_selection[1] = (self.board_selection[1]-1)%self.board_size
+                    self.board_selection[1] = (
+                        self.board_selection[1]-1) % self.board_size
                 self.draw(scr)
             elif c in (curses.KEY_LEFT, ord("a"), ord("h")):
                 if self.game_state == GameState.MOVE:
-                    self.board_selection[0] = (self.board_selection[0]-1)%self.board_size
+                    self.board_selection[0] = (
+                        self.board_selection[0]-1) % self.board_size
                 elif self.game_state == GameState.CONFIRM:
                     self.selection = (self.selection-1) % 2
                 self.draw(scr)
             elif c in (curses.KEY_RIGHT, ord("d"), ord("l")):
                 if self.game_state == GameState.MOVE:
-                    self.board_selection[0] = (self.board_selection[0]+1)%self.board_size
+                    self.board_selection[0] = (
+                        self.board_selection[0]+1) % self.board_size
                 elif self.game_state == GameState.CONFIRM:
                     self.selection = (self.selection+1) % 2
                 self.draw(scr)
@@ -113,29 +118,36 @@ class Game(ProgramState):
         scr.clear()
         self.tui_template(scr)
 
-        scr.addstr(1, 2, '                 ', curses.color_pair(self.tui_color))
-        scr.addstr(2, 2, '  Standard game  ', curses.color_pair(self.tui_color))
-        scr.addstr(3, 2, '                 ', curses.color_pair(self.tui_color))
-
+        scr.addstr(1, 2, '                 ',
+                   curses.color_pair(self.tui_color))
+        scr.addstr(2, 2, '  Standard game  ',
+                   curses.color_pair(self.tui_color))
+        scr.addstr(3, 2, '                 ',
+                   curses.color_pair(self.tui_color))
 
         if self.current_player == 0:
-            scr.addstr(1, 21, self.players[0].name, curses.color_pair(self.tui_color))
+            scr.addstr(1, 21, self.players[0].name,
+                       curses.color_pair(self.tui_color))
             scr.addstr(3, 21, self.players[1].name, curses.color_pair(0))
         else:
             scr.addstr(1, 21, self.players[0].name, curses.color_pair(0))
-            scr.addstr(3, 21, self.players[1].name, curses.color_pair(self.tui_color))
+            scr.addstr(3, 21, self.players[1].name,
+                       curses.color_pair(self.tui_color))
 
         self.draw_board(scr, 2, 9)
 
         if self.game_state == GameState.CONFIRM:
-            scr.addstr(6, 2, "  confirm  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 0 else curses.color_pair(1))
-            scr.addstr(6, 15, "  undo  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
+            scr.addstr(6, 2, "  confirm  ", curses.color_pair(
+                self.tui_color) | curses.A_BLINK if self.selection == 0 else curses.color_pair(1))
+            scr.addstr(6, 15, "  undo  ", curses.color_pair(self.tui_color) |
+                       curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
 
         elif self.game_state == GameState.END:
             message = "  TIE  " if self.game_result == GameResult.TIE else f"  {self.player().name.upper()} WON  "
 
             scr.addstr(6, 2, message, curses.color_pair(self.tui_color))
-            scr.addstr(6, 4+len(message), "  exit  ", curses.color_pair(self.tui_color) | curses.A_BLINK)
+            scr.addstr(6, 4+len(message), "  exit  ",
+                       curses.color_pair(self.tui_color) | curses.A_BLINK)
 
         scr.refresh()
 
@@ -143,11 +155,12 @@ class Game(ProgramState):
         for y in range(self.board_size):
             for x in range(self.board_size):
                 color = curses.color_pair(1)
-                if self.game_state == GameState.MOVE and y == self.board_selection[1] and x == self.board_selection[0]:
+                if y == self.board_selection[1] and x == self.board_selection[0] and self.game_state == GameState.MOVE:
                     color = curses.color_pair(self.tui_color) | curses.A_BLINK
-                elif self.game_state == GameState.CONFIRM and y == self.board_selection[1] and x == self.board_selection[0]:
+                elif y == self.board_selection[1] and x == self.board_selection[0] and self.game_state == GameState.CONFIRM:
                     color = curses.color_pair(self.tui_color)
 
                 scr.addstr(y_pos+y*4, x_pos+x*9, "       ", color)
-                scr.addstr(y_pos+y*4+1, x_pos+x*9, f"   {self.symbols[self.board(x,y)]}   ", color)
+                scr.addstr(y_pos+y*4+1, x_pos+x*9,
+                           f"   {self.symbols[self.board(x,y)]}   ", color)
                 scr.addstr(y_pos+y*4+2, x_pos+x*9, "       ", color)

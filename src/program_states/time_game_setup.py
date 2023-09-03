@@ -1,7 +1,6 @@
 import curses
 
-from src.program_state import ProgramState
-from src.player import Player
+from src import ProgramState, Player
 
 
 class TimeGameSetup(ProgramState):
@@ -22,12 +21,12 @@ class TimeGameSetup(ProgramState):
             ],
             [
                 "undoes",
-                    (("30s", 30),
-                    ("60s", 60),
-                    ("75s", 75),
-                    ("90s", 90),
-                    ("105s", 105),
-                    ("120s", 120)),
+                (("30s", 30),
+                 ("60s", 60),
+                 ("75s", 75),
+                 ("90s", 90),
+                 ("105s", 105),
+                 ("120s", 120)),
                 10,
                 1,
             ],
@@ -120,9 +119,12 @@ class TimeGameSetup(ProgramState):
                     curses.curs_set(0)
 
                 elif self.selection == 9:
-                    player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5))
-                    player2 = Player(self.entry_value(6), self.entry_value(7), self.entry_value(8))
-                    s = (self.entry_value(0), self.entry_value(1), self.entry_value(2), player1, player2)
+                    player1 = Player(self.entry_value(
+                        3), self.entry_value(4), self.entry_value(5))
+                    player2 = Player(self.entry_value(
+                        6), self.entry_value(7), self.entry_value(8))
+                    s = (self.entry_value(0), self.entry_value(
+                        1), self.entry_value(2), player1, player2)
 
                     return "time_game", s, {}
 
@@ -165,23 +167,27 @@ class TimeGameSetup(ProgramState):
                         row[2],
                         padding,
                         row[1][0][1],
-                        curses.color_pair(0) | curses.A_UNDERLINE | curses.A_BLINK,
+                        curses.color_pair(
+                            0) | curses.A_UNDERLINE | curses.A_BLINK,
                     )
                 else:
-                    scr.addstr(row[2], padding, row[1][0][1], curses.color_pair(0))
+                    scr.addstr(row[2], padding, row[1][0]
+                               [1], curses.color_pair(0))
 
                 continue
 
             for i, entry in enumerate(row[1]):
                 if j == self.selection and i == row[3]:
                     scr.addstr(
-                        row[2], padding, entry[0], curses.color_pair(3) | curses.A_BLINK
+                        row[2], padding, entry[0], curses.color_pair(
+                            3) | curses.A_BLINK
                     )
                 elif i == row[3]:
                     scr.addstr(row[2], padding, entry[0], curses.color_pair(0))
                 else:
                     scr.addstr(
-                        row[2], padding, entry[0], curses.color_pair(0) | curses.A_DIM
+                        row[2], padding, entry[0], curses.color_pair(
+                            0) | curses.A_DIM
                     )
 
                 padding += len(entry[0]) + 1
