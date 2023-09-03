@@ -5,6 +5,7 @@ from src.program_states.menu import Menu
 from src.program_states.help import Help
 from src.program_states.game_setup import GameSetup
 from src.program_states.minimax import AI
+from src.program_states.time_game_setup import TimeGameSetup
 
 
 class Tictactoe:
@@ -16,10 +17,9 @@ class Tictactoe:
             "quit": None,
             "game_setup": GameSetup,
             "with_computer": AI,
+            'time_game_setup': TimeGameSetup,
             # Do implementacji
-            # 'game_time': None,
             # 'scoreboard': None,
-            # 'players': None,
             # 'add_player': None,
         }
 
@@ -35,7 +35,8 @@ class Tictactoe:
             if self.program_state == "quit":
                 return
 
-            state = self.program_states[self.program_state](*state_args, **state_kwargs)
+            state = self.program_states[self.program_state](
+                *state_args, **state_kwargs)
             self.program_state, state_args, state_kwargs = state.loop(scr)
 
     def curses_init(self, scr):
@@ -55,14 +56,6 @@ class Tictactoe:
 def main():
     tictactoe = Tictactoe()
     curses.wrapper(tictactoe.loop)
-
-    # game = Game(5, '%', '@')
-    # game.place(0,0)
-    # game.adv_player()
-    # game.place(4,4)
-    # game.adv_player()
-    # game.place(3,3)
-    # game.print_board()
 
 
 if __name__ == "__main__":
