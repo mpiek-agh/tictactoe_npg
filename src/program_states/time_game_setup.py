@@ -1,10 +1,12 @@
 import curses
 
-from src import ProgramState, Player
+from src.program_states import GameSetup
 
 
-class TimeGameSetup(ProgramState):
+class TimeGameSetup(GameSetup):
     def __init__(self):
+        super().__init__()
+
         # Klucz, pozycje w subsekcji z wartościami, wiersz w TUI, wybór
         self.menu_entries = [
             [
@@ -20,13 +22,15 @@ class TimeGameSetup(ProgramState):
                 2,
             ],
             [
-                "undoes",
-                (("30s", 30),
-                 ("60s", 60),
-                 ("75s", 75),
-                 ("90s", 90),
-                 ("105s", 105),
-                 ("120s", 120)),
+                "time",
+                (
+                    ("30s", 30),
+                    ("60s", 60),
+                    ("75s", 75),
+                    ("90s", 90),
+                    ("105s", 105),
+                    ("120s", 120),
+                ),
                 10,
                 1,
             ],
@@ -91,105 +95,12 @@ class TimeGameSetup(ProgramState):
             ["play", (("Play", None),), 22, 0],
         ]
 
-        self.selection = 0
+        self.next_state = "time_game"
 
-    def entry_value(self, entry):
-        return self.menu_entries[entry][1][self.menu_entries[entry][3]][1]
-
-    def loop(self, scr):
-        self.draw(scr)
-
-        while True:
-            c = scr.getch()
-            if c == ord("q"):
-                return "menu", [], {}
-            elif c in (ord(" "), ord("\n")):
-                if self.menu_entries[self.selection][-1] is str:
-                    self.menu_entries[self.selection][1][0][1] = ""
-                    self.draw(scr)
-                    scr.nodelay(False)
-                    curses.echo()
-                    curses.curs_set(1)
-                    self.menu_entries[self.selection][1][0][1] = scr.getstr(
-                        self.menu_entries[self.selection][2], 2, 20
-                    )
-
-                    scr.nodelay(True)
-                    curses.noecho()
-                    curses.curs_set(0)
-
-                elif self.selection == 9:
-                    player1 = Player(self.entry_value(
-                        3), self.entry_value(4), self.entry_value(5))
-                    player2 = Player(self.entry_value(
-                        6), self.entry_value(7), self.entry_value(8))
-                    s = (self.entry_value(0), self.entry_value(
-                        1), self.entry_value(2), player1, player2)
-
-                    return "time_game", s, {}
-
-                self.selection = (self.selection + 1) % len(self.menu_entries)
-                self.draw(scr)
-
-            elif c in (curses.KEY_DOWN, ord("s"), ord("j")):
-                self.selection = (self.selection + 1) % len(self.menu_entries)
-                self.draw(scr)
-            elif c in (curses.KEY_UP, ord("w"), ord("k")):
-                self.selection = (self.selection - 1) % len(self.menu_entries)
-                self.draw(scr)
-            elif c in (curses.KEY_LEFT, ord("a"), ord("h")):
-                self.menu_entries[self.selection][3] = (
-                    self.menu_entries[self.selection][3] - 1
-                ) % len(self.menu_entries[self.selection][1])
-                self.draw(scr)
-            elif c in (curses.KEY_RIGHT, ord("d"), ord("l")):
-                self.menu_entries[self.selection][3] = (
-                    self.menu_entries[self.selection][3] + 1
-                ) % len(self.menu_entries[self.selection][1])
-                self.draw(scr)
-
-    def draw(self, scr):
-        scr.clear()
-        self.tui_template(scr)
-
+    def draw_headers(self, scr):
         scr.addstr(1, 2, "  Time game  ", curses.color_pair(2))
         scr.addstr(3, 2, "Board size", curses.color_pair(1))
         scr.addstr(6, 2, "Starting player", curses.color_pair(1))
         scr.addstr(9, 2, "Time", curses.color_pair(1))
         scr.addstr(12, 2, "Player 1", curses.color_pair(1))
         scr.addstr(17, 2, "Player 2", curses.color_pair(1))
-
-        for j, row in enumerate(self.menu_entries):
-            padding = 2
-            if row[-1] is str:
-                if j == self.selection:
-                    scr.addstr(
-                        row[2],
-                        padding,
-                        row[1][0][1],
-                        curses.color_pair(
-                            0) | curses.A_UNDERLINE | curses.A_BLINK,
-                    )
-                else:
-                    scr.addstr(row[2], padding, row[1][0]
-                               [1], curses.color_pair(0))
-
-                continue
-
-            for i, entry in enumerate(row[1]):
-                if j == self.selection and i == row[3]:
-                    scr.addstr(
-                        row[2], padding, entry[0], curses.color_pair(
-                            3) | curses.A_BLINK
-                    )
-                elif i == row[3]:
-                    scr.addstr(row[2], padding, entry[0], curses.color_pair(0))
-                else:
-                    scr.addstr(
-                        row[2], padding, entry[0], curses.color_pair(
-                            0) | curses.A_DIM
-                    )
-
-                padding += len(entry[0]) + 1
-
-        scr.refresh()
