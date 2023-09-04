@@ -7,82 +7,18 @@ class GameSetup(ProgramState):
     def __init__(self):
         # Klucz, pozycje w subsekcji z wartościami, wiersz w TUI, wybór
         self.menu_entries = [
-            [
-                "board_size",
-                (("3x3", 3), ("4x4", 4), ("5x5", 5), ("6x6", 6)),
-                4,
-                0,
-            ],
-            [
-                "starting_player",
-                (("1", 0), ("2", 1), ("Random", -1)),
-                7,
-                2,
-            ],
-            [
-                "undoes",
-                (("0", 0), ("1", 1), ("2", 2), ("3", 3)),
-                10,
-                1,
-            ],
+            ["board_size", (("3x3", 3), ("4x4", 4), ("5x5", 5), ("6x6", 6)), 4, 0],
+            ["starting_player", (("1", 0), ("2", 1), ("Random", -1)), 7, 2],
+            ["undoes", (("0", 0), ("1", 1), ("2", 2), ("3", 3)), 10, 1],
+
             ["player1_name", [["Name", "Player 1 name"]], 13, 0, str],
-            [
-                "player1_symbol",
-                (
-                    ("X", "X"),
-                    ("O", "O"),
-                    ("#", "#"),
-                    ("$", "$"),
-                    ("%", "%"),
-                    ("&", "&"),
-                    ("M", "M"),
-                    ("W", "W"),
-                ),
-                14,
-                0,
-            ],
-            [
-                "player1_color",
-                (
-                    ("Cyan", 2),
-                    ("Magenta", 3),
-                    ("Blue", 4),
-                    ("Green", 5),
-                    ("Red", 6),
-                    ("Yellow", 7),
-                ),
-                15,
-                1,
-            ],
+            ["player1_symbol", (("X", "X"), ("O", "O"), ("#", "#"), ("$", "$"), ("%", "%"), ("&", "&"), ("M", "M"), ("W", "W"),), 14, 0],
+            ["player1_color", (("Cyan", 2), ("Magenta", 3), ("Blue", 4), ("Green", 5), ("Red", 6), ("Yellow", 7),), 15, 1],
+
             ["player2_name", [["Name", "Player 2 name"]], 18, 0, str],
-            [
-                "player2_symbol",
-                (
-                    ("X", "X"),
-                    ("O", "O"),
-                    ("#", "#"),
-                    ("$", "$"),
-                    ("%", "%"),
-                    ("&", "&"),
-                    ("M", "M"),
-                    ("W", "W"),
-                ),
-                19,
-                1,
-            ],
-            [
-                "player2_color",
-                (
-                    ("Cyan", 2),
-                    ("Magenta", 3),
-                    ("Blue", 4),
-                    ("Green", 5),
-                    ("Red", 6),
-                    ("Yellow", 7),
-                ),
-                20,
-                2,
-            ],
+            ["player2_symbol", (("X", "X"), ("O", "O"), ("#", "#"), ("$", "$"), ("%", "%"), ("&", "&"), ("M", "M"), ("W", "W"),), 19, 1],
+            ["player2_color", (("Cyan", 2), ("Magenta", 3), ("Blue", 4), ("Green", 5), ("Red", 6), ("Yellow", 7),), 20, 2],
+
             ["play", (("Play", None),), 22, 0],
         ]
 
@@ -92,15 +28,7 @@ class GameSetup(ProgramState):
     def get_loop_return(self):
         player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5))
         player2 = Player(self.entry_value(6), self.entry_value(7), self.entry_value(8))
-        s = (
-            self.entry_value(0),
-            self.entry_value(1),
-            self.entry_value(2),
-            player1,
-            player2,
-        )
-
-        return s
+        return (self.entry_value(0), self.entry_value(1), self.entry_value(2), player1, player2)
 
     def entry_value(self, entry):
         return self.menu_entries[entry][1][self.menu_entries[entry][3]][1]
@@ -116,16 +44,12 @@ class GameSetup(ProgramState):
                 if self.menu_entries[self.selection][-1] is str:
                     self.menu_entries[self.selection][1][0][1] = ""
                     self.draw(scr)
+
                     scr.nodelay(False)
                     curses.echo()
-                    curses.curs_set(1)
-                    self.menu_entries[self.selection][1][0][1] = scr.getstr(
-                        self.menu_entries[self.selection][2], 2, 20
-                    )
-
-                    scr.nodelay(True)
+                    self.menu_entries[self.selection][1][0][1] = scr.getstr(self.menu_entries[self.selection][2], 2, 20)
                     curses.noecho()
-                    curses.curs_set(0)
+                    scr.nodelay(True)
 
                 elif self.selection == 9:
                     return self.next_state, self.get_loop_return(), {}
@@ -140,14 +64,10 @@ class GameSetup(ProgramState):
                 self.selection = (self.selection - 1) % len(self.menu_entries)
                 self.draw(scr)
             elif c in (curses.KEY_LEFT, ord("a"), ord("h")):
-                self.menu_entries[self.selection][3] = (
-                    self.menu_entries[self.selection][3] - 1
-                ) % len(self.menu_entries[self.selection][1])
+                self.menu_entries[self.selection][3] = (self.menu_entries[self.selection][3] - 1) % len(self.menu_entries[self.selection][1])
                 self.draw(scr)
             elif c in (curses.KEY_RIGHT, ord("d"), ord("l")):
-                self.menu_entries[self.selection][3] = (
-                    self.menu_entries[self.selection][3] + 1
-                ) % len(self.menu_entries[self.selection][1])
+                self.menu_entries[self.selection][3] = (self.menu_entries[self.selection][3] + 1) % len(self.menu_entries[self.selection][1])
                 self.draw(scr)
 
     def draw_headers(self, scr):
@@ -160,7 +80,6 @@ class GameSetup(ProgramState):
 
     def draw(self, scr):
         scr.clear()
-        self.tui_template(scr)
 
         self.draw_headers(scr)
 
@@ -168,12 +87,7 @@ class GameSetup(ProgramState):
             padding = 2
             if row[-1] is str:
                 if j == self.selection:
-                    scr.addstr(
-                        row[2],
-                        padding,
-                        row[1][0][1],
-                        curses.color_pair(0) | curses.A_UNDERLINE | curses.A_BLINK,
-                    )
+                    scr.addstr(row[2], padding, row[1][0][1], curses.color_pair(0) | curses.A_UNDERLINE | curses.A_BLINK)
                 else:
                     scr.addstr(row[2], padding, row[1][0][1], curses.color_pair(0))
 
@@ -181,16 +95,14 @@ class GameSetup(ProgramState):
 
             for i, entry in enumerate(row[1]):
                 if j == self.selection and i == row[3]:
-                    scr.addstr(
-                        row[2], padding, entry[0], curses.color_pair(3) | curses.A_BLINK
-                    )
+                    scr.addstr(row[2], padding, entry[0], curses.color_pair(3) | curses.A_BLINK)
                 elif i == row[3]:
                     scr.addstr(row[2], padding, entry[0], curses.color_pair(0))
                 else:
-                    scr.addstr(
-                        row[2], padding, entry[0], curses.color_pair(0) | curses.A_DIM
-                    )
+                    scr.addstr(row[2], padding, entry[0], curses.color_pair(0) | curses.A_DIM)
 
                 padding += len(entry[0]) + 1
+
+        self.tui_template(scr)
 
         scr.refresh()

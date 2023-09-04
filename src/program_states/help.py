@@ -14,7 +14,6 @@ class Help(ProgramState):
 
     def draw(self, scr):
         scr.clear()
-        self.tui_template(scr)
 
         scr.addstr(1, 2, '  Help  ', curses.color_pair(2))
 
@@ -37,7 +36,8 @@ class Help(ProgramState):
         scr.addstr(' - select, confirm')
 
         scr.addstr(11, 2, 'For real help, please visit: ')
-        scr.addstr('https://findahelpline.com/pl/topics/suicidal-thoughts',
-                   curses.COLOR_BLUE | curses.A_UNDERLINE)
+        scr.addstr('https://findahelpline.com/pl/topics/suicidal-thoughts', curses.COLOR_BLUE | curses.A_UNDERLINE)
+
+        self.tui_template(scr)
 
         scr.refresh()

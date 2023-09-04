@@ -9,89 +9,18 @@ class TimeGameSetup(GameSetup):
 
         # Klucz, pozycje w subsekcji z wartościami, wiersz w TUI, wybór
         self.menu_entries = [
-            [
-                "board_size",
-                (("3x3", 3), ("4x4", 4), ("5x5", 5), ("6x6", 6)),
-                4,
-                0,
-            ],
-            [
-                "starting_player",
-                (("1", 0), ("2", 1), ("Random", -1)),
-                7,
-                2,
-            ],
-            [
-                "time",
-                (
-                    ("30s", 30),
-                    ("60s", 60),
-                    ("75s", 75),
-                    ("90s", 90),
-                    ("105s", 105),
-                    ("120s", 120),
-                ),
-                10,
-                1,
-            ],
+            ["board_size", (("3x3", 3), ("4x4", 4), ("5x5", 5), ("6x6", 6)), 4, 0],
+            ["starting_player", (("1", 0), ("2", 1), ("Random", -1)), 7, 2],
+            ["time", (("30s", 30), ("60s", 60), ("75s", 75), ("90s", 90), ("105s", 105), ("120s", 120),), 10, 1],
+
             ["player1_name", [["Name", "Player 1 name"]], 13, 0, str],
-            [
-                "player1_symbol",
-                (
-                    ("X", "X"),
-                    ("O", "O"),
-                    ("#", "#"),
-                    ("$", "$"),
-                    ("%", "%"),
-                    ("&", "&"),
-                    ("M", "M"),
-                    ("W", "W"),
-                ),
-                14,
-                1,
-            ],
-            [
-                "player1_color",
-                (
-                    ("Cyan", 2),
-                    ("Magenta", 3),
-                    ("Blue", 4),
-                    ("Green", 5),
-                    ("Red", 6),
-                    ("Yellow", 7),
-                ),
-                15,
-                1,
-            ],
+            ["player1_symbol", (("X", "X"), ("O", "O"), ("#", "#"), ("$", "$"), ("%", "%"), ("&", "&"), ("M", "M"), ("W", "W"),), 14, 1],
+            ["player1_color", (("Cyan", 2), ("Magenta", 3), ("Blue", 4), ("Green", 5), ("Red", 6), ("Yellow", 7),), 15, 1],
+
             ["player2_name", [["Name", "Player 2 name"]], 18, 0, str],
-            [
-                "player2_symbol",
-                (
-                    ("X", "X"),
-                    ("O", "O"),
-                    ("#", "#"),
-                    ("$", "$"),
-                    ("%", "%"),
-                    ("&", "&"),
-                    ("M", "M"),
-                    ("W", "W"),
-                ),
-                19,
-                1,
-            ],
-            [
-                "player2_color",
-                (
-                    ("Cyan", 2),
-                    ("Magenta", 3),
-                    ("Blue", 4),
-                    ("Green", 5),
-                    ("Red", 6),
-                    ("Yellow", 7),
-                ),
-                20,
-                2,
-            ],
+            ["player2_symbol", (("X", "X"), ("O", "O"), ("#", "#"), ("$", "$"), ("%", "%"), ("&", "&"), ("M", "M"), ("W", "W"),), 19, 1],
+            ["player2_color", (("Cyan", 2), ("Magenta", 3), ("Blue", 4), ("Green", 5), ("Red", 6), ("Yellow", 7),), 20, 2],
+
             ["play", (("Play", None),), 22, 0],
         ]
 

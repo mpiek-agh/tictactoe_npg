@@ -45,24 +45,14 @@ class Board:
 
         # wygrana w kolumnie
         for col in range(self.size):
-            if (
-                len(set(row[col] for row in self.board)) == 1
-                and self.board[0][col] != 0
-            ):
+            if (len(set(row[col] for row in self.board)) == 1 and self.board[0][col] != 0):
                 return self.board[0][col]
 
         # wygrana na przekątnych
-        if (
-            len(set(self.board[i][i] for i in range(self.size))) == 1
-            and self.board[0][0] != 0
-        ):
+        if (len(set(self.board[i][i] for i in range(self.size))) == 1 and self.board[0][0] != 0):
             return self.board[0][0]
 
-        if (
-            len(set(self.board[i][self.size - i - 1]
-                for i in range(self.size))) == 1
-            and self.board[0][self.size - 1] != 0
-        ):
+        if (len(set(self.board[i][self.size - i - 1] for i in range(self.size))) == 1 and self.board[0][self.size - 1] != 0):
             return self.board[0][self.size - 1]
 
         # brak wygranych

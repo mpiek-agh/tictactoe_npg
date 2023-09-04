@@ -30,13 +30,13 @@ class Tictactoe:
             if self.program_state == "quit":
                 return
 
-            state = self.program_states[self.program_state](
-                *state_args, **state_kwargs)
+            state = self.program_states[self.program_state](*state_args, **state_kwargs)
             self.program_state, state_args, state_kwargs = state.loop(scr)
 
     def curses_init(self, scr):
         scr.clear()
         scr.refresh()
+        scr.nodelay(True)
 
         curses.start_color()
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)

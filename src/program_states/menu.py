@@ -35,7 +35,6 @@ class Menu(ProgramState):
 
     def draw(self, scr):
         scr.clear()
-        self.tui_template(scr)
 
         scr.addstr(1, 2, '  TicTacToe  ', curses.color_pair(2))
 
@@ -44,5 +43,7 @@ class Menu(ProgramState):
                 scr.addstr(3+i, 2, entry[0], curses.color_pair(3))
             else:
                 scr.addstr(3+i, 2, entry[0], curses.color_pair(1))
+
+        self.tui_template(scr)
 
         scr.refresh()
