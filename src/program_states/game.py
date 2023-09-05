@@ -83,7 +83,6 @@ class Game(ProgramState):
 
                 elif self.game_state == GameState.MOVE:
                     if self.board.place(self.board_selection[0], self.board_selection[1], self.current_player + 1):
-                        self.board.place(self.board_selection[0], self.board_selection[1], self.player())
                         self.game_state = GameState.CONFIRM
 
                 self.draw(scr)
@@ -111,36 +110,36 @@ class Game(ProgramState):
     def draw(self, scr):
         scr.clear()
 
-        self.draw_header(scr)
-        self.draw_buttons(scr)
+        self.draw_header(scr, "Standard Game", 2, 1)
+        self.draw_player_names(scr, 21, 1)
+        self.draw_confirm_buttons(scr, 2, 6)
+        self.draw_end_message(scr, 2, 6)
         self.draw_board(scr, 2, 9)
 
         self.tui_template(scr)
 
         scr.refresh()
 
-    def draw_buttons(self, scr):
+    def draw_confirm_buttons(self, scr, x, y):
         if self.game_state == GameState.CONFIRM:
-            scr.addstr(6, 2, "  confirm  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 0 else curses.color_pair(1))
-            scr.addstr(6, 15, "  undo  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
+            scr.addstr(y, x, "  confirm  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 0 else curses.color_pair(1))
+            scr.addstr(y, x+13, "  undo  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
 
-        elif self.game_state == GameState.END:
+    def draw_end_message(self, scr, x, y):
+        if self.game_state == GameState.END:
             message = ("  TIE  " if self.game_result == GameResult.TIE else f"  {self.player().get_name()} WON  ")
 
-            scr.addstr(6, 2, message, curses.color_pair(self.tui_color))
-            scr.addstr(6, 4 + len(message), "  exit  ", curses.color_pair(self.tui_color) | curses.A_BLINK)
+            scr.addstr(y, x, message, curses.color_pair(self.tui_color))
+            scr.addstr(y, x + 2 + len(message), "  exit  ", curses.color_pair(self.tui_color) | curses.A_BLINK)
 
-    def draw_header(self, scr):
-        scr.addstr(1, 2, "                 ", curses.color_pair(self.tui_color))
-        scr.addstr(2, 2, "  Standard game  ", curses.color_pair(self.tui_color))
-        scr.addstr(3, 2, "                 ", curses.color_pair(self.tui_color))
+    def draw_header(self, scr, header, x, y):
+        scr.addstr(y, x, " "*(len(header)+4), curses.color_pair(self.tui_color))
+        scr.addstr(y+1, x, f"  {header}  ", curses.color_pair(self.tui_color))
+        scr.addstr(y+2, x, " "*(len(header)+4), curses.color_pair(self.tui_color))
 
-        if self.current_player:
-            scr.addstr(1, 21, self.players[0].get_name(), curses.color_pair(0))
-            scr.addstr(3, 21, self.players[1].get_name(), curses.color_pair(self.tui_color))
-        else:
-            scr.addstr(1, 21, self.players[0].get_name(), curses.color_pair(self.tui_color))
-            scr.addstr(3, 21, self.players[1].get_name(), curses.color_pair(0))
+    def draw_player_names(self, scr, x, y):
+        scr.addstr(y, x, self.players[0].get_name(), curses.color_pair(0 if self.current_player else self.tui_color))
+        scr.addstr(y+2, x, self.players[1].get_name(), curses.color_pair(0 if not self.current_player else self.tui_color))
 
     def draw_board(self, scr, x_pos, y_pos):
         for y in range(self.board_size):

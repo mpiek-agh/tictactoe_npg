@@ -19,3 +19,7 @@ class ProgramState(ABC):
 
     def tui_template(self, scr):
         scr.addstr(curses.LINES - 1, 0, "Press q to go back, use arrow keys and space to navigate ", curses.color_pair(1))
+
+    def clear_cursor(self, scr):
+        # przestawia kursor w prawy dolny róg ekranu
+        scr.move(curses.LINES-1, curses.COLS-1)

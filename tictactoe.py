@@ -1,18 +1,22 @@
 import curses
 
-from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, AI
+from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, AI, TimeGame
 
 
 class Tictactoe:
     def __init__(self):
         self.program_states = {
-            "game": Game,
+            "quit": None,
             "menu": Menu,
             "help": Help,
-            "quit": None,
+
             "game_setup": GameSetup,
-            "with_computer": AI,
+            "game": Game,
+
             'time_game_setup': TimeGameSetup,
+            'time_game': TimeGame,
+
+            "with_computer": AI,
             # Do implementacji
             # 'scoreboard': None,
             # 'add_player': None,
