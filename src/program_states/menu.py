@@ -9,7 +9,6 @@ class Menu(ProgramState):
             ('Player vs player', 'game_setup'),
             ('Timed player vs player', 'time_game_setup'),
             ('Player vs computer', 'computer_game_setup'),
-            ('Players', 'players'),
             ('Scoreboard', 'scoreboard'),
             ('Help', 'help'),
             ('Quit', 'quit'),
