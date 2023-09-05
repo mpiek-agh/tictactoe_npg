@@ -2,7 +2,6 @@ from random import randint
 import curses
 from time import time
 
-from src import Board
 from src.program_states import GameState, GameResult, Game
 
 
