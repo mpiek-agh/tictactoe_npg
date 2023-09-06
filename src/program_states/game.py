@@ -19,12 +19,12 @@ class GameResult(Enum):
 
 
 class Game(ProgramState):
-    def __init__(self, board_size, starting_player, undoes, player1, player2):
+    def __init__(self, board_size, starting_player, player1, player2):
         self.board_size = board_size
         self.starting_player = starting_player
-        self.undoes = undoes
         self.players = [player1, player2]
         self.symbols = [" ", player1.symbol, player2.symbol]
+        self.undoes = [player1.undoes, player2.undoes]
 
         # Jeżeli gracz, który ma wykonać pierwszy ruch nie został podany to jest wybierany losowo
         self.current_player = (self.starting_player if self.starting_player > 0 else randint(0, 1))
@@ -78,9 +78,9 @@ class Game(ProgramState):
                             self.board_selection = new_position
                             self.adv_player()
 
-                    if self.selection == 1:
+                    elif self.selection == 1:
                         pass
-
+                        
                 elif self.game_state == GameState.MOVE:
                     if self.board.place(self.board_selection[0], self.board_selection[1], self.current_player + 1):
                         self.game_state = GameState.CONFIRM

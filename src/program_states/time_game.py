@@ -7,7 +7,7 @@ from src.program_states import GameState, GameResult, Game
 
 class TimeGame(Game):
     def __init__(self, board_size, starting_player, player1, player2):
-        super().__init__(board_size, starting_player, 0, player1, player2)
+        super().__init__(board_size, starting_player, player1, player2)
 
     def loop(self, scr):
         self.draw(scr)

@@ -27,9 +27,9 @@ class GameSetup(ProgramState):
         self.confirm_entry = 9
 
     def get_loop_return(self):
-        player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5))
-        player2 = Player(self.entry_value(6), self.entry_value(7), self.entry_value(8))
-        return (self.entry_value(0), self.entry_value(1), self.entry_value(2), player1, player2)
+        player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5), 0 ,self.entry_value(2))
+        player2 = Player(self.entry_value(6), self.entry_value(7), self.entry_value(8), 0 ,self.entry_value(2))
+        return (self.entry_value(0), self.entry_value(1), player1, player2)
 
     def entry_value(self, entry):
         return self.menu_entries[entry][1][self.menu_entries[entry][3]][1]
