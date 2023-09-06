@@ -24,6 +24,7 @@ class GameSetup(ProgramState):
 
         self.selection = 0
         self.next_state = "game"
+        self.confirm_entry = 9
 
     def get_loop_return(self):
         player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5))
@@ -51,7 +52,7 @@ class GameSetup(ProgramState):
                     curses.noecho()
                     scr.nodelay(True)
 
-                elif self.selection == 9:
+                elif self.selection == self.confirm_entry:
                     return self.next_state, self.get_loop_return(), {}
 
                 self.selection = (self.selection + 1) % len(self.menu_entries)

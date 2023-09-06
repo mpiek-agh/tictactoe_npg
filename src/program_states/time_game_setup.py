@@ -26,6 +26,7 @@ class TimeGameSetup(GameSetup):
         ]
 
         self.next_state = "time_game"
+        self.confirm_entry = 9
 
     def get_loop_return(self):
         player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5), self.entry_value(2))

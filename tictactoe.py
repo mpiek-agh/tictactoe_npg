@@ -1,6 +1,6 @@
 import curses
 
-from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, AI, TimeGame
+from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, MinimaxSetup, TimeGame, AI
 
 
 class Tictactoe:
@@ -16,7 +16,8 @@ class Tictactoe:
             'time_game_setup': TimeGameSetup,
             'time_game': TimeGame,
 
-            "with_computer": AI,
+            "computer_game_setup": MinimaxSetup,
+            "with_computer": AI
             # Do implementacji
             # 'scoreboard': None,
             # 'add_player': None,
