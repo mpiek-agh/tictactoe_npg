@@ -24,6 +24,16 @@ class Board:
 
         return random.choice(free_cells) if len(free_cells) > 0 else False
 
+    def get_free(self):
+        # wybiera losową pustą komórkę
+        free_cells = []
+        for y in range(self.size):
+            for x in range(self.size):
+                if not self.board[y][x]:
+                    free_cells.append([x, y])
+
+        return free_cells
+
     def place(self, x, y, player):
         if self.board[y][x] == 0:
             self.board[y][x] = player
