@@ -79,9 +79,7 @@ class Game(ProgramState):
                             self.adv_player()
 
                     elif self.selection == 1:
-                        if self.undoes[self.current_player] == 0:
-                            pass
-                        else:
+                        if self.undoes[self.current_player] != 0:
                             self.board.remove(self.board_selection[0], self.board_selection[1])
                             self.undoes[self.current_player] = self.undoes[self.current_player] - 1
                             self.game_state = GameState.MOVE
