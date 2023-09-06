@@ -24,14 +24,18 @@ class GameSetup(ProgramState):
 
         self.selection = 0
         self.next_state = "game"
+
+        # pozycja w menu przy której wciśnięcie spacji spowoduje przejście do kolejnego stanu programu
         self.confirm_entry = 9
 
     def get_loop_return(self):
+        # definiuje co powinna zwrócić funkcja loop
         player1 = Player(self.entry_value(3), self.entry_value(4), self.entry_value(5), 0 ,self.entry_value(2))
         player2 = Player(self.entry_value(6), self.entry_value(7), self.entry_value(8), 0 ,self.entry_value(2))
         return (self.entry_value(0), self.entry_value(1), player1, player2)
 
     def entry_value(self, entry):
+        # zwraca wartość konkretnej pozycji w menu w zależności od wyboru użytkownika
         return self.menu_entries[entry][1][self.menu_entries[entry][3]][1]
 
     def loop(self, scr):

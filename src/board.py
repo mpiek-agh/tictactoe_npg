@@ -8,6 +8,9 @@ class Board:
         self.new_board()
 
     def __call__(self, x, y):
+        # zwraca wartość z podanej komórki
+        # plansza = Board(3)
+        # wartość = plansza(x, y)
         return self.board[y][x]
 
     def new_board(self):
@@ -25,7 +28,7 @@ class Board:
         return random.choice(free_cells) if len(free_cells) > 0 else False
 
     def get_free(self):
-        # wybiera losową pustą komórkę
+        # zwraca liste pustych komórek
         free_cells = []
         for y in range(self.size):
             for x in range(self.size):
@@ -35,6 +38,7 @@ class Board:
         return free_cells
 
     def place(self, x, y, player):
+        # umieszcza id gracza na określonej pozycji, sprawdza czy pozycja jest dostępna
         if self.board[y][x] == 0:
             self.board[y][x] = player
             return True
@@ -42,9 +46,11 @@ class Board:
         return False
 
     def remove(self, x, y):
+        # usuwa id gracza z podanej komórki
         self.board[y][x] = 0
 
     def print_board(self):
+        # wyświetla planszę w terminalu
         pp(self.board)
 
     def win_check(self):
