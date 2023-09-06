@@ -79,7 +79,12 @@ class Game(ProgramState):
                             self.adv_player()
 
                     elif self.selection == 1:
-                        pass
+                        if self.undoes[self.current_player] == 0:
+                            pass
+                        else:
+                            self.board.remove(self.board_selection[0], self.board_selection[1])
+                            self.undoes[self.current_player] = self.undoes[self.current_player] - 1
+                            self.game_state = GameState.MOVE
                         
                 elif self.game_state == GameState.MOVE:
                     if self.board.place(self.board_selection[0], self.board_selection[1], self.current_player + 1):
@@ -123,7 +128,12 @@ class Game(ProgramState):
     def draw_confirm_buttons(self, scr, x, y):
         if self.game_state == GameState.CONFIRM:
             scr.addstr(y, x, "  confirm  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 0 else curses.color_pair(1))
-            scr.addstr(y, x+13, "  undo  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
+            if self.undoes[self.current_player] == 0:
+                scr.addstr(y, x+13, "  undo  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
+                scr.addstr(" - you can't undo")
+            else:
+                scr.addstr(y, x+13, "  undo  ", curses.color_pair(self.tui_color) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
+                scr.addstr(f" - you have {self.undoes[self.current_player]} undoes")
 
     def draw_end_message(self, scr, x, y):
         if self.game_state == GameState.END:
