@@ -1,6 +1,6 @@
 import curses
 
-from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, MinimaxSetup, TimeGame, AI
+from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, MinimaxSetup, TimeGame, AI, Scoreboard
 
 
 class Tictactoe:
@@ -20,7 +20,9 @@ class Tictactoe:
             'time_game': TimeGame,
 
             "computer_game_setup": MinimaxSetup,
-            "with_computer": AI
+            "with_computer": AI,
+
+            "scoreboard": Scoreboard
         }
 
         # stan domyślny aktywowany po uruchomieniu programu

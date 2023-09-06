@@ -6,3 +6,4 @@ from .time_game_setup import TimeGameSetup
 from .time_game import TimeGame
 from .minimax_setup import MinimaxSetup
 from .minimax import AI
+from .scoreboard import Scoreboard
