@@ -5,8 +5,11 @@ from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, Minim
 
 class Tictactoe:
     def __init__(self):
+
+        # stany programu (ekrany, widoki)
+        # identyfikator: klasa realizująca stan
         self.program_states = {
-            "quit": None,
+            "quit": None, # powoduje wyłączenie programu
             "menu": Menu,
             "help": Help,
 
@@ -18,11 +21,9 @@ class Tictactoe:
 
             "computer_game_setup": MinimaxSetup,
             "with_computer": AI
-            # Do implementacji
-            # 'scoreboard': None,
-            # 'add_player': None,
         }
 
+        # stan domyślny aktywowany po uruchomieniu programu
         self.program_state = "menu"
 
     def loop(self, scr):
@@ -35,7 +36,10 @@ class Tictactoe:
             if self.program_state == "quit":
                 return
 
+            # utworzenie klasy stanu z zapewnionymi przez poprzedni stan parametrami
             state = self.program_states[self.program_state](*state_args, **state_kwargs)
+
+            # id kolejnego stanu, argumenty pozycyjne, argumenty nazwane
             self.program_state, state_args, state_kwargs = state.loop(scr)
 
     def curses_init(self, scr):
@@ -44,6 +48,9 @@ class Tictactoe:
         scr.nodelay(True)
 
         curses.start_color()
+
+        # definicje kolorów - identyfikowane za pomocą liczby podanej w pierwszym argumencie
+        # id o wartości 0 to biała czcionka bez tła
         curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
         curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_CYAN)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_MAGENTA)
