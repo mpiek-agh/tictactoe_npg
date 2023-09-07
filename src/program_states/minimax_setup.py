@@ -22,8 +22,9 @@ class MinimaxSetup(GameSetup):
         self.confirm_entry = 5
     
     def get_loop_return(self):
-        player = Player(self.entry_value(2), self.entry_value(3), self.entry_value(4))
-        return (self.entry_value(0), self.entry_value(1), player)
+        player1 = Player(self.entry_value(2), self.entry_value(3), self.entry_value(4))
+        player2 = Player(self.entry_value(2), self.entry_value(3), self.entry_value(4))
+        return (self.entry_value(0), self.entry_value(1), player1, player2)
 
     def draw_headers(self, scr):
         scr.addstr(1, 2, "  Game with computer  ", curses.color_pair(2))
