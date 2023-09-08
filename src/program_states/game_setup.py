@@ -91,8 +91,8 @@ class GameSetup(ProgramState):
         for j, row in enumerate(self.menu_entries):
             padding = 2
             if row[-1] is str:
-                if j == self.selection:
-                    scr.addstr(row[2], padding, row[1][0][1], curses.color_pair(0) | curses.A_UNDERLINE | curses.A_BLINK)
+                if j == self.selection: 
+                    scr.addstr(row[2], padding, row[1][0][1], curses.color_pair(0))
                 else:
                     scr.addstr(row[2], padding, row[1][0][1], curses.color_pair(0))
 
@@ -100,11 +100,11 @@ class GameSetup(ProgramState):
 
             for i, entry in enumerate(row[1]):
                 if j == self.selection and i == row[3]:
-                    scr.addstr(row[2], padding, entry[0], curses.color_pair(3) | curses.A_BLINK)
+                    scr.addstr(row[2], padding, entry[0], curses.color_pair(1))
                 elif i == row[3]:
-                    scr.addstr(row[2], padding, entry[0], curses.color_pair(0))
+                    scr.addstr(row[2], padding, entry[0], curses.color_pair(3))
                 else:
-                    scr.addstr(row[2], padding, entry[0], curses.color_pair(0) | curses.A_DIM)
+                    scr.addstr(row[2], padding, entry[0], curses.color_pair(0))
 
                 padding += len(entry[0]) + 1
 
