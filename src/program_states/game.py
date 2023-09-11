@@ -20,7 +20,7 @@ class GameResult(Enum):
 
 
 class Game(ProgramState):
-    def __init__(self, board_size, starting_player, player1, player2, level=0):
+    def __init__(self, board_size, starting_player, player1, player2):
         self.board_size = board_size
         self.starting_player = starting_player
         self.players = [player1, player2]

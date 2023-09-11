@@ -7,13 +7,6 @@ import curses
 from src.scoreboard_managment import update_scoreboard
 
 class AI(Game):
-    def __init__(self, board_size, starting_player, player, computer, level=1) -> None:
-        self.board_size = board_size
-        self.board = Board(board_size)
-        super().__init__(board_size, starting_player, 0, player, computer)
-
-        self.level = level
-
     def random_move(self):
         empty_field = self.board.get_free()
         index = random.randrange(0, len(empty_field))
