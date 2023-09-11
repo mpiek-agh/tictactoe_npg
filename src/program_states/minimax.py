@@ -4,6 +4,8 @@ from src import Board
 from src.program_states import GameState, GameResult, Game
 import curses
 
+from src.scoreboard_managment import update_scoreboard
+
 class AI(Game):
     def __init__(self, board_size, starting_player, player, computer, level=1) -> None:
         self.board_size = board_size
@@ -87,6 +89,7 @@ class AI(Game):
                         self.game_result = GameResult.WIN
                         self.game_state = GameState.END
                         self.tui_color = self.players[winner - 1].color
+                        update_scoreboard(self.player().name, 'win_computer')
                     elif not new_position:
                         self.game_result = GameResult.TIE
                         self.game_state = GameState.END

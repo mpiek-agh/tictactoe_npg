@@ -4,6 +4,8 @@ from time import time
 
 from src.program_states import GameState, GameResult, Game
 
+from src.scoreboard_managment import update_scoreboard
+
 
 class TimeGame(Game):
     def __init__(self, board_size, starting_player, player1, player2):
@@ -30,6 +32,8 @@ class TimeGame(Game):
                         self.game_result = GameResult.WIN
                         self.game_state = GameState.END
                         self.tui_color = self.players[winner - 1].color
+
+                        update_scoreboard(self.player().name, 'win_time')
                     elif not new_position:
                         self.game_result = GameResult.TIE
                         self.game_state = GameState.END
@@ -71,6 +75,7 @@ class TimeGame(Game):
                     self.game_state = GameState.END
                     self.game_result = GameResult.WIN
                     self.adv_player()
+                    update_scoreboard(self.player().name, 'win_time')
                     self.draw(scr)
 
             self.draw_player_times(scr, 16, 1)

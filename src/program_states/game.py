@@ -4,6 +4,8 @@ from enum import Enum
 
 from src import ProgramState, Board
 
+from src.scoreboard_managment import update_scoreboard
+
 class GameState(Enum):
     # stany gry
     MOVE = 1  # gracz wykonuje ruch
@@ -71,6 +73,8 @@ class Game(ProgramState):
                             self.game_result = GameResult.WIN
                             self.game_state = GameState.END
                             self.tui_color = self.players[winner - 1].color
+
+                            update_scoreboard(self.player().name, 'win_pvp')
                         elif not new_position:
                             self.game_result = GameResult.TIE
                             self.game_state = GameState.END
