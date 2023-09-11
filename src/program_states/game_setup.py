@@ -52,7 +52,7 @@ class GameSetup(ProgramState):
 
                     scr.nodelay(False)
                     curses.echo()
-                    self.menu_entries[self.selection][1][0][1] = scr.getstr(self.menu_entries[self.selection][2], 2, 20)
+                    self.menu_entries[self.selection][1][0][1] = scr.getstr(self.menu_entries[self.selection][2], 2, 20).decode('utf-8').strip()
                     curses.noecho()
                     scr.nodelay(True)
 

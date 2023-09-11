@@ -5,7 +5,6 @@ from src.program_states import Game, GameSetup, Help, Menu, TimeGameSetup, Minim
 
 class Tictactoe:
     def __init__(self):
-
         # stany programu (ekrany, widoki)
         # identyfikator: klasa realizująca stan
         self.program_states = {
