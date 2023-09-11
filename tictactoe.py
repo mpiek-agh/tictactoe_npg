@@ -33,15 +33,22 @@ class Tictactoe:
         state_args = ()
         state_kwargs = {}
 
-        while True:
-            if self.program_state == "quit":
-                return
 
-            # utworzenie klasy stanu z zapewnionymi przez poprzedni stan parametrami
-            state = self.program_states[self.program_state](*state_args, **state_kwargs)
+        try:
+            while True:
+                if self.program_state == "quit":
+                    return
 
-            # id kolejnego stanu, argumenty pozycyjne, argumenty nazwane
-            self.program_state, state_args, state_kwargs = state.loop(scr)
+                # utworzenie klasy stanu z zapewnionymi przez poprzedni stan parametrami
+                state = self.program_states[self.program_state](*state_args, **state_kwargs)
+
+                # id kolejnego stanu, argumenty pozycyjne, argumenty nazwane
+                self.program_state, state_args, state_kwargs = state.loop(scr)
+        except curses.error:
+            curses.echo()
+            curses.nocbreak()
+            curses.endwin()
+            print("Your terminal is too small. Make the window bigger or use a smaller font.")
 
     def curses_init(self, scr):
         scr.clear()
