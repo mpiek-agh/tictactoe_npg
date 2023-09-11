@@ -53,8 +53,8 @@ class Scoreboard(ProgramState):
         scr.refresh()
     
     def draw_confirm_buttons(self, scr, x, y):
-        scr.addstr(y, x, " previous page ", curses.color_pair(0) | curses.A_BLINK if self.selection == 0 else curses.color_pair(1))
-        scr.addstr(y, x + 18, " next page ", curses.color_pair(0) | curses.A_BLINK if self.selection == 1 else curses.color_pair(1))
+        scr.addstr(y, x, " previous page ", curses.color_pair(1) if self.selection == 0 else curses.color_pair(3))
+        scr.addstr(y, x + 18, " next page ", curses.color_pair(1) if self.selection == 1 else curses.color_pair(3))
 
     def draw_scoreboard(self, scr, x, y):
         for i, line in enumerate(self.scoreboard[self.page*self.max_rows:self.page*self.max_rows+self.max_rows]):
