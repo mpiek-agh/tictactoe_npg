@@ -1,6 +1,6 @@
 __pycache__/
 
-.csv
+*.csv
 .env
 .venv
 env/
