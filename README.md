@@ -16,10 +16,10 @@ In our aplication, this basic version has been modified with additional options 
 2. Extract the archive to the main game folder.
 3. Launch the game using Visual Studio Code or the Terminal.
 
-```
-git clone <https://github.com/mpiek-agh/tictactoe_npg.git>
+```bash
+git clone https://github.com/mpiek-agh/tictactoe_npg.git
 pip install --user windows-curses
-cd python tictactoe.py
+python tictactoe.py
 ```
 
 ## Screenshots
