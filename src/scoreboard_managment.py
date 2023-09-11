@@ -4,11 +4,13 @@ from typing import Dict
 
 
 # Ścieżka do pliku CSV
-scoreboard_path = pathlib.Path('src/csv_files/scoreboard.csv')
+scoreboard_path = pathlib.Path('csv_files/scoreboard.csv')
 scoreboard_data_headers =  ['player', 'win_pvp', 'win_time', 'win_computer']
 
 
 def save_scoreboard(data):
+    scoreboard_path.parent.mkdir(exist_ok=True, parents=True)
+
     with open(scoreboard_path, 'w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames = scoreboard_data_headers)
 
